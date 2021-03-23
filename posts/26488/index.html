@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>EAE 6320 Engineering II -  03 Further Graphic Independent - Chen Mi</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="Chen (Forrest) Mi - Personal Website"><meta name="msapplication-TileImage" content="/img/favicon.png"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Chen (Forrest) Mi - Personal Website"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Chen Mi | Forrest Mi | 糜棽 | Lishtys"><meta property="og:type" content="blog"><meta property="og:title" content="EAE 6320 Engineering II -  03 Further Graphic Independent"><meta property="og:url" content="http://chenmi.ink/posts/26488/"><meta property="og:site_name" content="Chen Mi"><meta property="og:description" content="Chen Mi | Forrest Mi | 糜棽 | Lishtys"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://chenmi-ink-1252570167.cos.na-siliconvalley.myqcloud.com/AssignThreeBanner.png"><meta property="article:published_time" content="2018-09-12T06:42:00.000Z"><meta property="article:author" content="Chen (Forrst) Mi"><meta property="article:tag" content="Entertainment Arts Engineering"><meta property="article:tag" content="Graphics"><meta property="article:tag" content="C++"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://chenmi-ink-1252570167.cos.na-siliconvalley.myqcloud.com/AssignThreeBanner.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://chenmi.ink/posts/26488/"},"headline":"EAE 6320 Engineering II -  03 Further Graphic Independent","image":["https://chenmi-ink-1252570167.cos.na-siliconvalley.myqcloud.com/AssignThreeBanner.png"],"datePublished":"2018-09-12T06:42:00.000Z","author":{"@type":"Person","name":"Chen(Forrest) Mi"},"description":"Continue with platform independent task from last week, this time I remove the Graphics.[platform].cpp making united interfaces for both OpenGL and DirectX. Also, I modify the implantations for cMesh"}</script><link rel="canonical" href="http://chenmi.ink/posts/26488/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-135283636-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-135283636-1');</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.4.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/favicon.png" alt="Chen Mi" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/profile">Profile</a><a class="navbar-item" href="/portfolio">Portfolio</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2018-09-12T06:42:00.000Z" title="9/12/2018, 6:42:00 AM">2018-09-12</time></span><span class="level-item"><a class="link-muted" href="/categories/Game-Engine/">Game Engine</a><span> / </span><a class="link-muted" href="/categories/Game-Engine/Realtime-Rendering/">Realtime Rendering</a></span><span class="level-item">6 minutes read (About 831 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">EAE 6320 Engineering II -  03 Further Graphic Independent</h1><div class="content"><p>Continue with platform independent task from last week, this time I remove the <code>Graphics.[platform].cpp</code> making united interfaces for both OpenGL and DirectX.</p>
+<p>Also, I modify the implantations for <code>cMesh</code> &amp; <code>cEffects</code>, which allows users to pass data rather than hard coded. The mesh data format used in <code>cMesh</code> has been changed to vertices array with index array. </p>
+<span id="more"></span> 
+
+
+<hr>
+<blockquote>
+<p>Click <a target="_blank" rel="noopener" href="https://chenmi-ink-1252570167.cos.na-siliconvalley.myqcloud.com/EAE6320Zip/AssignThreeMyGame_.zip">Download</a> download the game.</p>
+</blockquote>
+<hr>
+<h1 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h1><p>In last post, I add a <code>cMeshData</code> class. Since the sMesh would be extended in the future, I remove the MeshData first.</p>
+<h2 id="GraphicsBase"><a href="#GraphicsBase" class="headerlink" title="GraphicsBase"></a>GraphicsBase</h2><p>Then in order to remove <code>Graphics.[Platform].cpp</code> files, I make a new namespace <code> <strong>[GraphicsBase]</strong> </code> to handle platform dependent codes and a<code> Graphics.cpp</code> to keep the original interfaces and calls for the graphic render pipeline. In this way, the <code>Graphic.cpp</code> would be clean.</p>
+<p><code><strong>[GraphicsBase]</strong></code> file is in the <strong>Graphics</strong> project. Below are interfaces:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="function"><span class="keyword">void</span>  <span class="title">ClearTarget</span><span class="params">(Graphics::Color c)</span></span>;</span><br><span class="line"> <span class="function">cResult <span class="title">CleanUp</span><span class="params">()</span></span>;</span><br><span class="line"> <span class="function">cResult <span class="title">Initialize</span><span class="params">(<span class="keyword">const</span> Graphics::sInitializationParameters&amp; </span></span></span><br><span class="line"><span class="function"><span class="params"> i_initializationParameters)</span></span>;</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">Swap</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>The <code>Initialize()</code> handles DirectX specific view initialization and <code>Swap()</code> deal with both platform buffer swapping.</p>
+<p><code>ClearTarget()</code> takes a <code>Color</code> class to change the back buffer color. By using the color class, it allows user to define different color they want. It has a default color set black. Below is a usage in <code>Graphic.cpp</code> </p>
+<p><strong>Defination</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Color();</span><br><span class="line">Color(<span class="keyword">float</span> r, <span class="keyword">float</span> g, <span class="keyword">float</span> b, <span class="keyword">float</span> a);</span><br></pre></td></tr></table></figure>
+
+<p><strong>Usage</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   &#123;</span><br><span class="line">   	 <span class="comment">// Clear Color</span></span><br><span class="line">    Graphics::Color c;</span><br><span class="line">   	GraphicsBase::ClearTarget(c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h2 id="cMesh"><a href="#cMesh" class="headerlink" title="cMesh"></a>cMesh</h2><p>In order to support creating multiple meshes and save memory space. The <code>cMesh</code> has a new interface to setup geometry data :</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">     </span><br><span class="line"><span class="function">cResult <span class="title">InitializeGeometry</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;VertexFormats::sMesh&gt; </span></span></span><br><span class="line"><span class="function"><span class="params">veticesArray, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">uint16_t</span>&gt; indexArray)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>It takes vertices data and index data, which could allow the engine only keep unique vertices and use index sequence to combine the vertices.</p>
+<p>In the project, I decide to use DirectX winding order as default. The <code>InitializeGeometry() </code>would take care of differences. As a result, the <code>Graphics.cpp</code> only need to care one copy of geometry data.</p>
+<blockquote>
+<p>(In OpenGL, I <strong><del>directly</del></strong> reverse index array. It’s better to use a copy to keep the index array clean in general cases. – Okay for temporary stage. )</p>
+</blockquote>
+<p><strong>usage</strong> in graphics.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//..</span></span><br><span class="line"><span class="comment">// data</span></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Graphics::VertexFormats::sMesh&gt; <span class="title">meshes</span><span class="params">(vData, vData + vertexCount)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">uint16_t</span>&gt; <span class="title">indexArray</span><span class="params">(iData, iData + indexCount)</span></span>;</span><br><span class="line"><span class="comment">//..</span></span><br><span class="line"><span class="keyword">if</span> (!(result = s_mesh_instance.InitializeGeometry(meshes, indexArray)))</span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="comment">//...</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In the future, those meshes and index data are stored in a file like fbx. Right now it’s fine to hard code as an input from outside.</p>
+<hr>
+<h2 id="cEffect"><a href="#cEffect" class="headerlink" title="cEffect"></a>cEffect</h2><p>The changes on <code>cEffect</code> are quite simple. Just let shader file paths become parameters that can be changed by users.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">     </span><br><span class="line"><span class="function">ceae6320::cResult <span class="title">InitializeShadingData</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> filePath[], </span></span></span><br><span class="line"><span class="function"><span class="params"><span class="keyword">const</span> <span class="keyword">char</span> filePath2[])</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>usage</strong> in graphics.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Initialize the shading data</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (!(result = s_effect_instance.InitializeShadingData(</span><br><span class="line">	    <span class="string">&quot;data/Shaders/Vertex/standard.shader&quot;</span>,</span><br><span class="line">		<span class="string">&quot;data/Shaders/Fragment/tintColorAnimation.shader&quot;</span>)))</span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="comment">//...</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (!(result = s_effect_instance1.InitializeShadingData(</span><br><span class="line">	    <span class="string">&quot;data/Shaders/Vertex/standard.shader&quot;</span>,</span><br><span class="line">			<span class="string">&quot;data/Shaders/Fragment/standard.shader&quot;</span>)))</span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="comment">//...</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+<hr>
+<h2 id="Memory-Usage"><a href="#Memory-Usage" class="headerlink" title="Memory Usage"></a>Memory Usage</h2><p><strong>cMesh</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Platform</th>
+<th align="center">Geometry Data</th>
+<th align="right">Index Length</th>
+<th align="center">Extra Alignment</th>
+<th align="right">Total</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">OpenGL</td>
+<td align="center">3 GLuint</td>
+<td align="right">1 uint16</td>
+<td align="center">Yes</td>
+<td align="right">16 bytes</td>
+</tr>
+<tr>
+<td align="left">DirectX</td>
+<td align="center">3 Pointer</td>
+<td align="right">1 uint16</td>
+<td align="center">Yes</td>
+<td align="right">32 bytes</td>
+</tr>
+</tbody></table>
+<p><strong>cEffect</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Platform</th>
+<th align="center">Handler</th>
+<th align="right">Render State</th>
+<th align="center">ProgramId</th>
+<th align="center">Extra Alignment</th>
+<th align="right">Total</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">OpenGL</td>
+<td align="center">2</td>
+<td align="right">1</td>
+<td align="center">1 GLuint</td>
+<td align="center">Yes</td>
+<td align="right">16 bytes</td>
+</tr>
+<tr>
+<td align="left">DirectX</td>
+<td align="center">2</td>
+<td align="right">1</td>
+<td align="center">NULL</td>
+<td align="center">No</td>
+<td align="right">40 bytes</td>
+</tr>
+</tbody></table>
+<p><strong>Render State</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Platform</th>
+<th align="center">Struct Data</th>
+<th align="right">Extra Alignment</th>
+<th align="right">Total</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">OpenGL</td>
+<td align="center">1uint8</td>
+<td align="right">Yes</td>
+<td align="right">1 bytes</td>
+</tr>
+<tr>
+<td align="left">DirectX</td>
+<td align="center">3 Pointer  + 1uint8</td>
+<td align="right">Yes</td>
+<td align="right">32 bytes</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Note:</strong>  DirectX is x64 platform, which takes 8 bytes for each address. OpenGL is x86 platform, which takes 4 bytes for each address.</p>
+</blockquote>
+<blockquote>
+<p><strong>Note:</strong>  The Handler is 4 bytes each.</p>
+</blockquote>
+<hr>
+<hr>
+<h1 id="Thoughts-amp-Discussion"><a href="#Thoughts-amp-Discussion" class="headerlink" title="Thoughts &amp; Discussion"></a>Thoughts &amp; Discussion</h1><ul>
+<li>Lots of implementation in <code>cMesh</code> follows the fact that both platform would store vertex data and index data into buffer. In this case, we don’t need to store data in codes.</li>
+<li>In my opinion, current solution has sacrificed some flexibility (Maybe).</li>
+<li>If get rid of <code>[index_Length]</code>, the <code>cMesh</code> would become smaller. Some misc infomation like index length could store in File Header. </li>
+</ul>
+<hr>
+<h1 id="Personalize"><a href="#Personalize" class="headerlink" title="Personalize"></a>Personalize</h1><h2 id="Controls"><a href="#Controls" class="headerlink" title="Controls"></a>Controls</h2><p>Hold <strong>[SPACE]</strong> key to slow down the color animation.  You may see slower animation transition like the images below. (When it becomes dark, it become slower than usual).</p>
+<hr>
+<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><p><img src="https://chenmi-ink-1252570167.cos.na-siliconvalley.myqcloud.com/AssignThreeRunning.gif" alt="Result"></p>
+<hr>
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><ul>
+<li>Back Buffer Color Animation</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">auto</span> stime= <span class="built_in">sin</span>(s_dataBeingSubmittedByApplicationThread-&gt;</span><br><span class="line">constantData_perFrame.g_elapsedSecondCount_simulationTime);</span><br><span class="line"><span class="keyword">auto</span> ctime= <span class="built_in">cos</span>(s_dataBeingSubmittedByApplicationThread-&gt;</span><br><span class="line">constantData_perFrame.g_elapsedSecondCount_simulationTime);</span><br><span class="line"> <span class="comment">// Clear Color</span></span><br><span class="line"><span class="function">Graphics::Color <span class="title">c</span><span class="params">(stime,ctime, stime + ctime,<span class="number">1</span>)</span></span>;</span><br><span class="line">GraphicsBase::ClearTarget(c);</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li><p>In Fragment shader, I get vertex position and change color for each section: <code> if(i_position.x<256) rVal=rVal/2+0.5;  if(i_position.y<256) bVal =bVal/2+0.5; </code></p>
+</li>
+<li><p>The picture contains 2 meshes. One is for 4 white triangles,which uses standard shader. The other is for the center square using animation shader.  </p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">vData[<span class="number">1</span>].x = <span class="number">0.0f</span>;</span><br><span class="line">vData[<span class="number">1</span>].y = <span class="number">0.5f</span>;</span><br><span class="line">vData[<span class="number">1</span>].z = <span class="number">0.0f</span>;</span><br><span class="line"> <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">vData[<span class="number">3</span>].x = <span class="number">0.5f</span>;</span><br><span class="line">vData[<span class="number">3</span>].y = <span class="number">0.5f</span>;</span><br><span class="line">vData[<span class="number">3</span>].z = <span class="number">0.0f</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Graphics::VertexFormats::sMesh&gt; </span><br><span class="line">					meshes(vData, vData + vertexCount);</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">uint16_t</span> iData[indexCount];</span><br><span class="line"></span><br><span class="line">iData[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//..</span></span><br><span class="line">iData[<span class="number">5</span>] = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">uint16_t</span>&gt; <span class="title">indexArray</span><span class="params">(iData, iData + indexCount)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li>This assignment takes me 8 hours to finish. </li>
+</ul>
+<hr>
+<h1 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h1><p>Click <a target="_blank" rel="noopener" href="https://chenmi-ink-1252570167.cos.na-siliconvalley.myqcloud.com/EAE6320Zip/AssignThreeMyGame_.zip">Download</a> download the game.</p>
+<p>Version: x64 - DirectX.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>EAE 6320 Engineering II -  03 Further Graphic Independent</p><p><a href="http://chenmi.ink/posts/26488/">http://chenmi.ink/posts/26488/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Chen(Forrest) Mi</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2018-09-12</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Entertainment-Arts-Engineering/">Entertainment Arts Engineering</a><a class="link-muted mr-2" rel="tag" href="/tags/Graphics/">Graphics</a><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5bd3445bee8c700011929deb&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/posts/35772/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">EAE 6320 Engineering II -  04 Application, Graphics Threads</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/posts/6362/"><span class="level-item">EAE 6320 Engineering II - Assignment 02 Mesh, Effects</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="lv-container" data-id="city" data-uid="MTAyMC80Mjg4Ny8xOTQzMw=="><script>(function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');</script><noscript>Please activate JavaScript for write a comment in LiveRe</noscript></div></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.png" alt="Forrest Mi"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Forrest Mi</p><p class="is-size-6 is-block">Game Engineer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>San Jose, CA</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">43</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">11</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">33</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/lishtys/" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Email" href="mailto:lishtys@gmail.com"><i class="fa fa-envelope"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Linkedin" href="https://www.linkedin.com/in/chenmi93/"><i class="fab fa-linkedin"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Portfolio" href="https://chenmi.ink/portfolio/"><i class="fas fa-cubes"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/lishtys/"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Process"><span class="level-left"><span class="level-item">1</span><span class="level-item">Process</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#GraphicsBase"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">GraphicsBase</span></span></a></li><li><a class="level is-mobile" href="#cMesh"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">cMesh</span></span></a></li><li><a class="level is-mobile" href="#cEffect"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">cEffect</span></span></a></li><li><a class="level is-mobile" href="#Memory-Usage"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">Memory Usage</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Thoughts-amp-Discussion"><span class="level-left"><span class="level-item">2</span><span class="level-item">Thoughts &amp; Discussion</span></span></a></li><li><a class="level is-mobile" href="#Personalize"><span class="level-left"><span class="level-item">3</span><span class="level-item">Personalize</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Controls"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Controls</span></span></a></li><li><a class="level is-mobile" href="#Output"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">Output</span></span></a></li><li><a class="level is-mobile" href="#Implementation"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">Implementation</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Download"><span class="level-left"><span class="level-item">4</span><span class="level-item">Download</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Game-AI/"><span class="level-start"><span class="level-item">Game AI</span></span><span class="level-end"><span class="level-item tag">3</span></span></a><ul><li><a class="level is-mobile" href="/categories/Game-AI/EAE-6900-023/"><span class="level-start"><span class="level-item">EAE 6900 - 023</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Game-Engine/"><span class="level-start"><span class="level-item">Game Engine</span></span><span class="level-end"><span class="level-item tag">28</span></span></a><ul><li><a class="level is-mobile" href="/categories/Game-Engine/Realtime-Rendering/"><span class="level-start"><span class="level-item">Realtime Rendering</span></span><span class="level-end"><span class="level-item tag">28</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/Unity/"><span class="level-start"><span class="level-item">Unity</span></span><span class="level-end"><span class="level-item tag">3</span></span></a><ul><li><a class="level is-mobile" href="/categories/Unity/Assets/"><span class="level-start"><span class="level-item">Assets</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Unity/DOTS/"><span class="level-start"><span class="level-item">DOTS</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E4%B8%AD%E6%96%87%E5%8D%9A%E5%AE%A2/"><span class="level-start"><span class="level-item">中文博客</span></span><span class="level-end"><span class="level-item tag">9</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E4%B8%AD%E6%96%87%E5%8D%9A%E5%AE%A2/2018%C2%B7%E6%9A%91%E6%9C%9F/"><span class="level-start"><span class="level-item">2018·暑期</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%B8%AD%E6%96%87%E5%8D%9A%E5%AE%A2/%E6%B8%B8%E8%80%8C%E8%BF%9C%E8%A1%8C/"><span class="level-start"><span class="level-item">游而远行</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li><li><a class="level is-mobile" href="/categories/%E4%B8%AD%E6%96%87%E5%8D%9A%E5%AE%A2/%E8%B0%81%E6%B2%A1%E6%9C%89%E6%AE%B5%E6%97%A7%E6%97%B6%E5%85%89/"><span class="level-start"><span class="level-item">谁没有段旧时光</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Addressable/"><span class="tag">Addressable</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Animation/"><span class="tag">Animation</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Animator-Controller/"><span class="tag">Animator Controller</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AssetsBundle/"><span class="tag">AssetsBundle</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Binary/"><span class="tag">Binary</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">15</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Camera/"><span class="tag">Camera</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CubeMap/"><span class="tag">CubeMap</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DOTS/"><span class="tag">DOTS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/EAE-6320/"><span class="tag">EAE 6320</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/EAE-6900/"><span class="tag">EAE 6900</span><span class="tag">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Entertainment-Arts-Engineering/"><span class="tag">Entertainment Arts Engineering</span><span class="tag">32</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FBX/"><span class="tag">FBX</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Game-AI/"><span class="tag">Game AI</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Gamma/"><span class="tag">Gamma</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Graphics/"><span class="tag">Graphics</span><span class="tag">15</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Lua/"><span class="tag">Lua</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Materials/"><span class="tag">Materials</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Maya/"><span class="tag">Maya</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Normal-Map/"><span class="tag">Normal Map</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenFrameworks/"><span class="tag">OpenFrameworks</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PBR/"><span class="tag">PBR</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Realtime-Rendering/"><span class="tag">Realtime Rendering</span><span class="tag">13</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Shader/"><span class="tag">Shader</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Specular/"><span class="tag">Specular</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Textrure/"><span class="tag">Textrure</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Texture/"><span class="tag">Texture</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Threads/"><span class="tag">Threads</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Transforms/"><span class="tag">Transforms</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Unity/"><span class="tag">Unity</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%B8%B8%E8%AE%B0/"><span class="tag">游记</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%B0%81%E6%B2%A1%E6%9C%89%E6%AE%B5%E6%97%A7%E6%97%B6%E5%85%89/"><span class="tag">谁没有段旧时光</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E9%9A%8F%E7%AC%94/"><span class="tag">随笔</span><span class="tag">2</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/favicon.png" alt="Chen Mi" height="28"></a><p class="is-size-7"><span>&copy; 2021 Chen(Forrest) Mi</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
